@@ -402,7 +402,7 @@ function DraftSection({ eventId, onApprove, approving }: {
   onApprove: (id: string) => void
   approving: boolean
 }) {
-  const { data: draftsData } = useQuery({
+  const { data: draftsData, isLoading } = useQuery({
     queryKey: ['event-drafts', eventId],
     queryFn: () => eventsService.getDrafts(eventId),
     enabled: !!eventId,
@@ -410,22 +410,28 @@ function DraftSection({ eventId, onApprove, approving }: {
 
   const drafts = draftsData?.data ?? []
 
-  if (drafts.length === 0) return null
-
   return (
-    <div className="space-y-3">
-      {drafts.map((draft) => (
-        <DraftCard
-          key={draft.id}
-          draftId={draft.id}
-          subject={draft.subject}
-          recipient={draft.recipient}
-          status={draft.status}
-          onApprove={onApprove}
-          approving={approving}
-        />
-      ))}
-    </div>
+    <Card title="Draft Replies">
+      {isLoading ? (
+        <div className="text-sm text-gray-400 dark:text-gray-500">Loading drafts...</div>
+      ) : drafts.length === 0 ? (
+        <div className="text-sm text-gray-400 dark:text-gray-500">No drafts yet — drafts are generated automatically after actions complete.</div>
+      ) : (
+        <div className="space-y-3">
+          {drafts.map((draft) => (
+            <DraftCard
+              key={draft.id}
+              draftId={draft.id}
+              subject={draft.subject}
+              recipient={draft.recipient}
+              status={draft.status}
+              onApprove={onApprove}
+              approving={approving}
+            />
+          ))}
+        </div>
+      )}
+    </Card>
   )
 }
 
