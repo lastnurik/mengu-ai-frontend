@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { Shield, Bell, Plug, Users, CreditCard, CheckCircle, Mail, Calendar, Moon, Sun, Monitor } from 'lucide-react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Topbar } from '@/components/layout/Sidebar'
@@ -20,6 +21,22 @@ const TABS = [
 export function SettingsPage() {
   const [activeTab, setActiveTab] = useState('profile')
   const { user } = useAuthStore()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const handledRef = useRef(false)
+
+  useEffect(() => {
+    if (handledRef.current) return
+    const integration = searchParams.get('integration')
+    const status = searchParams.get('status')
+    const error = searchParams.get('error')
+    if (integration || error) {
+      handledRef.current = true
+      setActiveTab('integrations')
+      if (status === 'connected') toast(`${integration} connected successfully`, 'success')
+      if (error) toast(error === 'integration_failed' ? 'Failed to connect provider' : error, 'error')
+      setSearchParams({}, { replace: true })
+    }
+  }, [searchParams, setSearchParams])
 
   return (
     <div className="flex flex-col h-full overflow-hidden">
