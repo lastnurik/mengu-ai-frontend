@@ -9,6 +9,7 @@ import { RegisterPage }    from '@/components/pages/RegisterPage'
 import { DashboardPage }   from '@/components/pages/DashboardPage'
 import { InboxPage }       from '@/components/pages/InboxPage'
 import { TasksPage }       from '@/components/pages/TasksPage'
+import { DraftsPage }      from '@/components/pages/DraftsPage'
 import { DocumentsPage }   from '@/components/pages/DocumentsPage'
 import { CalendarPage }    from '@/components/pages/CalendarPage'
 import { InsightsPage }    from '@/components/pages/InsightsPage'
@@ -44,6 +45,7 @@ export default function App() {
                 <Route path="/"           element={<DashboardPage />} />
                 <Route path="/inbox"      element={<InboxPage />} />
                 <Route path="/tasks"      element={<TasksPage />} />
+                <Route path="/drafts"     element={<DraftsPage />} />
                 <Route path="/documents"  element={<DocumentsPage />} />
                 <Route path="/calendar"   element={<CalendarPage />} />
                 <Route path="/insights"   element={<InsightsPage />} />

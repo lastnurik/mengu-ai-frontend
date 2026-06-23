@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import {
-  LayoutDashboard, Inbox, CheckSquare, FileText,
+  LayoutDashboard, Inbox, CheckSquare, FileText, Send,
   Calendar, Settings, Shield,
   LogOut, Bell, ChevronDown, CheckCheck, Info, AlertTriangle, AlertCircle, CheckCircle, Menu, X,
 } from 'lucide-react'
@@ -47,6 +47,7 @@ export function Sidebar() {
       section: 'Work',
       items: [
         { to: '/tasks',     icon: CheckSquare, label: 'Tasks' },
+        { to: '/drafts',    icon: Send,        label: 'Drafts' },
         { to: '/documents', icon: FileText,    label: 'Documents' },
         { to: '/calendar',  icon: Calendar,    label: 'Calendar' },
       ],
