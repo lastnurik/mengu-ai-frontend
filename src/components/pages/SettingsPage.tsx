@@ -204,6 +204,16 @@ function IntegrationsTab() {
     },
   })
 
+  const watchMutation = useMutation({
+    mutationFn: () => integrationsService.startGmailWatch(),
+    onSuccess: (res) => {
+      toast(`Email monitoring enabled for ${res.email_address}`, 'success')
+    },
+    onError: (err: any) => {
+      toast(err?.response?.data?.message ?? 'Failed to enable monitoring', 'error')
+    },
+  })
+
   async function handleConnect(provider: IntegrationProvider) {
     try {
       const url = await integrationsService.getOAuthUrl(provider)
@@ -243,6 +253,16 @@ function IntegrationsTab() {
                 <span className="flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400">
                   <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full" /> Connected
                 </span>
+                {intg.provider === 'gmail' && (
+                  <button
+                    type="button"
+                    onClick={() => watchMutation.mutate()}
+                    disabled={watchMutation.isPending}
+                    className="text-xs text-magenta-500 hover:text-magenta-600 transition-colors"
+                  >
+                    {watchMutation.isPending ? 'Enabling...' : 'Enable monitoring'}
+                  </button>
+                )}
                 <button
                   type="button"
                   onClick={() => disconnectMutation.mutate(intg.provider)}

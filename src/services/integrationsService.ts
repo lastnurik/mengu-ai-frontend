@@ -15,4 +15,9 @@ export const integrationsService = {
   async disconnect(provider: IntegrationProvider): Promise<void> {
     await httpClient.delete(`/integrations/${provider}`)
   },
+
+  async startGmailWatch(): Promise<{ status: string; email_address: string; expires_at: string }> {
+    const { data } = await httpClient.post('/gmail/watch')
+    return data
+  },
 }
