@@ -342,7 +342,7 @@ function EventDetail({ event: fullEvent, onReanalyze, reanalyzing, onApproveDraf
         </Card>
       )}
 
-      {analysis?.actions.some((a) => a.type === 'send_email_draft') && (
+      {analysis && (
         <DraftSection
           eventId={event.id}
           onApprove={onApproveDraft}
